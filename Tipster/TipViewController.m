@@ -20,6 +20,8 @@
 
 @implementation TipViewController
 
+bool hidden = false;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -35,6 +37,11 @@
     
     if (self.billField.text.length == 0) {
         [self hideLabels];
+        hidden = true;
+    }
+    else if (hidden == true){
+        [self showLabels];
+        hidden = false;
     }
     
     double tipPercentages[] = {0.15, 0.2, 0.25};
@@ -53,7 +60,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         CGRect billFrame = self.billField.frame;
         billFrame.origin.y += 200;
-        
+
         self.billField.frame = billFrame;
         
         CGRect labelsFrame = self.labelsContainerView.frame;
@@ -64,6 +71,23 @@
         self.labelsContainerView.alpha = 0;
     }];
     
+}
+
+- (void)showLabels {
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect billFrame = self.billField.frame;
+        billFrame.origin.y -= 200;
+
+        self.billField.frame = billFrame;
+        
+        CGRect labelsFrame = self.labelsContainerView.frame;
+        labelsFrame.origin.y -= 200;
+        
+        self.labelsContainerView.frame = labelsFrame;
+        
+        self.labelsContainerView.alpha = 1;
+    }];
     
 }
 
